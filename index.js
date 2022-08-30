@@ -6,93 +6,105 @@ const fs = require('fs');
 const questions = [
     {
         type: 'input',
-        message: 'What is the title of your project?',
+        message: 'Enter the title of your project: ',
         name: 'projectTitle',
     },
     {
         type: 'input',
-        message: "Enter in your project's description",
+        message: "Enter your project's description: ",
         name: 'description',
     },
     {
         type: 'input',
-        message: 'Enter in your installation details',
+        message: 'Enter your installation details: ',
         name: 'installation',
     },
     {
         type: 'input',
-        message: 'Enter in your usage information',
+        message: "Enter your project's usage information: ",
         name: 'usage',
     }, 
     {
         type: 'input',
-        message: 'Provide which license this project will use',
+        message: 'Select which license this project will use: ',
         name: 'license',
     },
     {
         type: 'input',
-        message: 'Enter in details on how to contribute',
+        message: 'Enter details on how to contribute: ',
         name: 'contributing',
     }, 
     {
         type: 'input',
-        message: 'Enter in information on testing',
+        message: 'Enter information on testing: ',
         name: 'tests',
-    } 
+    },
+    {
+        type: 'input',
+        message: 'Enter your GitHub username: ',
+        name: 'github',
+    },
+    {
+        type: 'input',
+        message: 'Enter your email: ',
+        name: 'email',
+    }  
 ]
 
-const generateReadMe = ({projectTitle, description, installation, usage, license, contributing, tests, questions}) => 
+const generateReadMe = ({projectTitle, description, installation, usage, license, contributing, tests, github, email}) => 
 `
 # ${projectTitle}
 
 ## Table of Contents
 * [Description](#description)
-* [Installation](#installation)
-* [Usage](#usage)
+* [Installation instructions](#installation-instructions)
+* [Usage Information](#usage-information)
 * [License](#license)
-* [Contributing](#contributing)
-* [Tests](#tests)
+* [Contribution Guidelines](#contribution-guidelines)
+* [Test Instructions](#test-instructions)
 * [Questions](#questions)
 
 ## Description
 ${description}
 
-## Installation
+## Installation Instructions
 ${installation}
 
-## Usage
+## Usage Information
 ${usage}
 
 ## License
 ${license}
 
-## Contributing
+## Contribution Guidelines
 ${contributing}
 
-## Tests
+## Test Instructions
 ${tests}
 
 ## Questions
-${questions}
+Have any addition questions? Contact me!
+GitHub: [${github}](https://github.com/${github})
+Email: ${email}
 `;
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     inquirer
-  .prompt(data)
-  .then((answers) => {
-    console.log(answers);
-    const readMeContent = generateReadMe(answers);
+    .prompt(data)
+    .then((answers) => {
+        console.log(answers);
+        const readMeContent = generateReadMe(answers);
 
-    fs.writeFile(fileName, readMeContent, (err) =>
-      err ? console.log(err) : console.log('Success!')
-    );
+        fs.writeFile(fileName, readMeContent, (err) =>
+            err ? console.log(err) : console.log('Success!')
+        );
   });
 }
 
 // TODO: Create a function to initialize app
 function init() {
-    writeToFile('README.md', questions)
+    writeToFile('README.md', questions);
 }
 
 // Function call to initialize app
