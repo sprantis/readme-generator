@@ -84,7 +84,9 @@ ${tests}
 
 ## Questions
 Have any addition questions? Contact me!
+&nbsp;  
 GitHub: [${github}](https://github.com/${github})
+&nbsp;
 Email: ${email}
 `;
 
