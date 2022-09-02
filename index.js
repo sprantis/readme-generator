@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -25,9 +26,10 @@ const questions = [
         name: 'usage',
     }, 
     {
-        type: 'input',
+        type: 'list',
         message: 'Select which license this project will use: ',
         name: 'license',
+        choices: ['MIT', 'CC0 1.0', 'Apache 2.0']
     },
     {
         type: 'input',
@@ -51,52 +53,13 @@ const questions = [
     }  
 ]
 
-const generateReadMe = ({projectTitle, description, installation, usage, license, contributing, tests, github, email}) => 
-`
-# ${projectTitle}
-
-## Table of Contents
-* [Description](#description)
-* [Installation instructions](#installation-instructions)
-* [Usage Information](#usage-information)
-* [License](#license)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Test Instructions](#test-instructions)
-* [Questions](#questions)
-
-## Description
-${description}
-
-## Installation Instructions
-${installation}
-
-## Usage Information
-${usage}
-
-## License
-${license}
-
-## Contribution Guidelines
-${contributing}
-
-## Test Instructions
-${tests}
-
-## Questions
-Have any addition questions? Contact me!
-&nbsp;  
-GitHub: [${github}](https://github.com/${github})
-&nbsp;
-Email: ${email}
-`;
-
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     inquirer
     .prompt(data)
     .then((answers) => {
         console.log(answers);
-        const readMeContent = generateReadMe(answers);
+        const readMeContent = generateMarkdown(answers);
 
         fs.writeFile(fileName, readMeContent, (err) =>
             err ? console.log(err) : console.log('Success!')
